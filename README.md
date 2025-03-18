@@ -1,23 +1,39 @@
 # Trabalho-Desenvolvimento-WEB
 
-<html>
-  <head>
-  
-  <title> Cadastro Lead </title>
-  
-  </head>
-  <body>
-    <p>A intenção do exercício é criar uma página de login e cadastro para "x" tema (possívelmente móveis planejados), onde o cliente possa preencher as seguintes infos: </p>
-    <h1> Bem vindo! </h1>
-	    <h2> Para seguir com seu projeto precisamos das seguintes informações: </h2>
-	    
-<p>Nome:<br/></p>	    
-<p>Cidade:<br/></p>
-<p>Contato: Telefone: E-mail:</p>
-<p>Ambientes:</p>
-<p>Referências:</p>
-<p>Valor previsto de investimento:</p>
-    
-  </body>
-  
-</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<form>
+    <label for="search">Termo de busca:</label>
+    <input type="text" id="search" name="Q">
+    <button type="submit">Pesquisar</button>
+</form>
+
+<form>
+<label for="nome">Nome:</label><br>
+<input type="text" id="nome" name="nome"><br><br>
+
+<label for="cidade">Cidade:</label><br>
+<input type="text" id="cidade" name="cidade"><br><br>
+
+<label for="tel">Telefone:</label><br>
+<input type="text" id="tel" name="tel"><br><br>
+
+<label for="mail">E-mail:</label><br>
+<input type="email" id="mail" name="mail"><br><br>
+
+<label for="amb">Ambientes:</label><br>
+<input type="text" id="amb" name="amb"><br><br>
+
+<label for="ref">Referências:</label><br>
+<input type="text" id="ref" name="ref"><br><br>
+
+<label for="inv">Valor previsto de investimento:</label><br>
+<input type="text" id="inv" name="inv"><br><br>
+
+<button type="submit">Enviar</button>
+</form>
+
