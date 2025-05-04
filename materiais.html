@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Materiais - Sua Casa Se Tornando Arte</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div>
+        <p>RUA XXXXXXXX, 0000</p>
+        <p>BAIRRO XYZ • CIDADE - ES</p>
+        <p>CEP 00000-00</p>
+      </div>
+      <div>
+        <p>00 00000-0000</p>
+      </div>
+      <div>
+        <p>TRANSFORMANDO PROJETOS EM REALIDADE</p>
+      </div>
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <nav>
+      <button>INÍCIO</button>
+      <button>AMBIENTES</button>
+      <button>SOLICITE SEU PROJETO</button>
+    </nav>
+  </header>
+
+  <!-- Título da página -->
+
+<header>
+  <h1>MATERIAIS</h1>
+</header>
+
+<hr>
+
+<div class="galeria">
+  <div class="ambiente">
+    <img src="imagens/mdf.png" alt="MDF">
+    <button class="btn-ambiente" onclick="mostrarDescricao('desc-mdf')">MDF</button>
+    <div id="desc-mdf" class="descricao" style="display: none;">
+      O MDF (Medium Density Fiberboard) é um painel de fibras de madeira de média densidade, muito usado para móveis planejados por sua versatilidade e acabamento liso.
+    </div>
+  </div>
+
+  <div class="ambiente">
+    <img src="imagens/mdp.png" alt="MDP">
+    <button class="btn-ambiente" onclick="mostrarDescricao('desc-mdp')">MDP</button>
+    <div id="desc-mdp" class="descricao" style="display: none;">
+      O MDP (Medium Density Particleboard) é composto por partículas de madeira e oferece boa resistência estrutural, ideal para estruturas internas.
+    </div>
+  </div>
+
+  <div class="ambiente">
+    <img src="imagens/vidro.png" alt="Vidro">
+    <button class="btn-ambiente" onclick="mostrarDescricao('desc-vidro')">VIDRO</button>
+    <div id="desc-vidro" class="descricao" style="display: none;">
+      O vidro é utilizado em portas, prateleiras e detalhes decorativos, trazendo leveza e modernidade aos ambientes.
+    </div>
+  </div>
+
+  <div class="ambiente">
+    <img src="imagens/ferragens.png" alt="Ferragens">
+    <button class="btn-ambiente" onclick="mostrarDescricao('desc-ferragens')">FERRAGENS</button>
+    <div id="desc-ferragens" class="descricao" style="display: none;">
+      Ferragens de alta qualidade -dobradiças, corrediças e puxadores- são essenciais para o bom funcionamento e durabilidade dos móveis.
+    </div>
+  </div>
+</div>
+
+<script>
+  function mostrarDescricao(id) {
+    const descricoes = document.querySelectorAll('.descricao');
+    descricoes.forEach(desc => desc.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+  }
+</script>
