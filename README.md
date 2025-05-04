@@ -1,47 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sua Casa Se Tornando Arte</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-  <header>
-    <div class="top-bar">
-      <div>
-        <p>RUA XXXXXXXX, 0000</p>
-        <p>BAIRRO XYZ • CIDADE - ES</p>
-        <p>CEP 00000-00</p>
-      </div>
-      <div>
-        <p>00 00000-0000</p>
-      </div>
-      <div>
-        <p>TRANSFORMANDO PROJETOS EM REALIDADE</p>
-      </div>
-      <div class="socials">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
+# Projeto - Site para loja de móveis planejados
 
-  <nav>
-      <button>AMBIENTES</button>
-      <button>MATERIAIS</button>
-      <button>SOLICITE SEU PROJETO</button>
-    </nav>
+- Página inicial
+- Página de ambientes
+- Página de materiais com descrições
+- Página de contato
 
-   <h1>SUA CASA SE TORNANDO ARTE</h1>
-    <hr />
-  </header>
-
-  <main class="galeria">
-<img src="imagens/cozinha.png" alt="Cozinha" />
-<img src="imagens/quarto.png" alt="Quarto" />
-<img src="imagens/sala.png" alt="Sala de Estar" />
-  </main>
-</body>
-</html>
-
+- Fundo escuro
+- Fonte clara, legível
+- Layout minimalista
