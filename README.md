@@ -27,13 +27,13 @@
       </div>
     </div>
 
-    <nav>
+  <nav>
       <button>AMBIENTES</button>
       <button>MATERIAIS</button>
       <button>SOLICITE SEU PROJETO</button>
     </nav>
 
-    <h1>SUA CASA SE TORNANDO ARTE</h1>
+   <h1>SUA CASA SE TORNANDO ARTE</h1>
     <hr />
   </header>
 
