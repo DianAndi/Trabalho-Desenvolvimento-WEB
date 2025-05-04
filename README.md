@@ -1,52 +1,47 @@
-# Trabalho-Desenvolvimento-WEB
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sua Casa Se Tornando Arte</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div>
+        <p>RUA XXXXXXXX, 0000</p>
+        <p>BAIRRO XYZ • CIDADE - ES</p>
+        <p>CEP 00000-00</p>
+      </div>
+      <div>
+        <p>00 00000-0000</p>
+      </div>
+      <div>
+        <p>TRANSFORMANDO PROJETOS EM REALIDADE</p>
+      </div>
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <nav>
+      <button>AMBIENTES</button>
+      <button>MATERIAIS</button>
+      <button>SOLICITE SEU PROJETO</button>
+    </nav>
 
-<form>
-    <fieldset>
-        <legend>Busca</legend>
-        <label for="search">Termo de busca:</label>
-        <input type="text" id="search" name="Q">
-        <button type="submit">Pesquisar</button>
-    </fieldset>
-</form>
+    <h1>SUA CASA SE TORNANDO ARTE</h1>
+    <hr />
+  </header>
 
-<form>
-    <fieldset>
-        <legend>Informações do Cliente</legend>
+  <main class="galeria">
+<img src="imagens/cozinha.png" alt="Cozinha" />
+<img src="imagens/quarto.png" alt="Quarto" />
+<img src="imagens/sala.png" alt="Sala de Estar" />
+  </main>
+</body>
+</html>
 
-<label for="nome">Nome:</label><br>
-    <input type="text" id="nome" name="nome" required><br><br>
-
-<label for="cidade">Cidade:</label><br>
-    <input type="text" id="cidade" name="cidade" required><br><br>
-
-<label for="tel">Telefone:</label><br>
-    <input type="text" id="tel" name="tel" required><br><br>
-
-<label for="mail">E-mail:</label><br>
-    <input type="email" id="mail" name="mail" required><br><br>
-
-<label for="amb">Ambientes:</label><br>
-    <input type="text" id="amb" name="amb" required><br><br>
-
-<label for="ref">Referências:</label><br>
-    <input type="text" id="ref" name="ref" required><br><br>
-
-<label for="inv">Valor previsto de investimento:</label><br>
-        <select id="inv" name="inv" required> <!– dropdown aqui –>
-            <option value="">Selecione um valor</option>
-            <option value="40-50k">De R$40.000 à R$50.000</option> 
-            <option value="50-60k">De R$50.000 à R$60.000</option>
-            <option value="70-80k">De R$70.000 à R$80.000</option>
-            <option value="80-90k">De R$80.000 à R$90.000</option>
-            <option value="100k-...">Acima de R$100.000</option>
-        </select><br><br>
-
-<button type="submit">Enviar</button>
-    </fieldset>
-</form>
