@@ -1,0 +1,33 @@
+<form id="uploadForm">
+  <label for="titulo">Título:</label>
+  <input type="text" id="titulo" required placeholder="Digite um título..." />
+
+  <label for="descricao">Descrição:</label>
+  <textarea id="descricao" required placeholder="Digite a descrição..."></textarea>
+
+  <label for="categoria">Categoria:</label>
+  <select id="categoria" required>
+    <option value="">Selecione uma categoria</option>
+    <option value="cozinha">Cozinha</option>
+    <option value="dormitorio">Dormitório</option>
+    <option value="sala">Sala</option>
+    <option value="escritorio">Escritório</option>
+    <option value="banheiro">Banheiro</option>
+    <option value="lavanderia">Lavanderia</option>
+    <option value="area_gourmet">Área Gourmet</option>
+  </select>
+
+  <label for="linha">Linha:</label>
+  <select id="linha" required>
+    <option value="">Selecione uma linha</option>
+    <option value="provensal">Linha Provençal</option>
+    <option value="industrial">Linha Industrial</option>
+    <option value="clean">Linha Clean</option>
+    <option value="colors">Linha Colors</option>
+  </select>
+
+  <label for="imagem">Imagem:</label>
+  <input type="file" id="imagem" accept="image/*" required />
+
+  <button type="submit">Adicionar</button>
+</form>
