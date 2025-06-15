@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Lojista</title>
+  <link rel="stylesheet" href="painel.css.css" />
+</head>
+<body>
+  <div class="painel-container">
+    <h1>Gerenciamento de Conteúdo</h1>
+
 <form id="uploadForm">
   <label for="titulo">Título:</label>
   <input type="text" id="titulo" required placeholder="Digite um título..." />
@@ -31,4 +43,33 @@
 
   <button type="submit">Adicionar</button>
 </form>
+
+    <script>
+    document.getElementById('uploadForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const titulo = document.getElementById('titulo').value;
+      const imagem = document.getElementById('imagem').files[0];
+
+      if (titulo && imagem) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const galeria = document.getElementById('galeria');
+          const item = document.createElement('div');
+          item.className = 'item';
+
+          item.innerHTML = `
+            <img src="${event.target.result}" alt="${titulo}" />
+            <p>${titulo}</p>
+          `;
+
+          galeria.appendChild(item);
+        };
+        reader.readAsDataURL(imagem);
+      }
+    });
+  </script>
+</body>
+</html>
+
 
