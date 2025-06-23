@@ -5,12 +5,13 @@ Sistema de gerenciamento de produtos para lojistas do ramo de móveis planejados
 
 ---
 
-### Tecnologias Utilizadas:
+### :computer: Tecnologias Utilizadas:
 
 - HTML5
 - CSS3 (TailwindCSS recomendado para integração)
 - JavaScript (puro + Fetch API)
-- JSON para comunicação com o backend (Laravel)
+- Python
+- JSON para comunicação com o backend (Flask)
 
 ### Funcionalidades
 
