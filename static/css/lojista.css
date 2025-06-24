@@ -1,0 +1,96 @@
+/* lojista.css */
+
+body {
+  background-color: #1f1f1f;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: white;
+}
+
+.login-container {
+  background-color: #555;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.login-container h1 {
+  margin-bottom: 20px;
+  color: #ADAEB3; /* Cor para o título */
+}
+
+.login-container label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-container input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 8px 0 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+}
+
+.login-container input:focus {
+  outline: none;
+  border-color: #ADAEB3;
+  box-shadow: 0 0 5px rgba(173, 174, 179, 0.5);
+}
+
+.login-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #1f1f1f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+  background-color: #ADAEB3;
+}
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.flashes li {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.flashes .success {
+    background-color: #4CAF50; /* verde */
+    color: white;
+}
+
+.flashes .error {
+    background-color: #f44336; /* vermelho */
+    color: white;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 480px) {
+  .login-container {
+    width: 90%;
+    padding: 20px;
+  }
+}
