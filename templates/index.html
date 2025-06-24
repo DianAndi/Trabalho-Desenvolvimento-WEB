@@ -42,82 +42,37 @@
 
   <main id="main-content">
     <section class="hero-section">
-      <h1>SEU PROJETO</h1>
-      <img src="{{ url_for('static', filename='imagens/SEU PROJETO.png') }}" alt="Seu Projeto">
-      <hr>
-      <p>Transformando seus sonhos em ambientes</p>
+        <h1>SUA CASA SE TORNANDO ARTE</h1>
+        <img src="{{ url_for('static', filename='imagens/SEU PROJETO.png') }}" alt="Sua Casa Se Tornando Arte">
+        <p>Transforme seus ambientes com nossos móveis planejados de alta qualidade. Criamos projetos únicos que refletem sua personalidade e otimizam cada espaço. Do design à instalação, nossa equipe garante excelência e satisfação.</p>
     </section>
 
     <section class="gallery-section">
-      <div class="gallery-item">
-        <img src="{{ url_for('static', filename='imagens/AMBIENTES.jpg') }}" alt="Ambientes">
-        <h2>AMBIENTES</h2>
-        <a href="{{ url_for('ambientes_partial') }}" class="button-link" data-route="{{ url_for('ambientes_partial') }}">VEJA MAIS</a>
-      </div>
-      <div class="gallery-item">
-        <img src="{{ url_for('static', filename='imagens/MATERIAIS.jpg') }}" alt="Materiais">
-        <h2>MATERIAIS</h2>
-        <a href="{{ url_for('materiais_partial') }}" class="button-link" data-route="{{ url_for('materiais_partial') }}">VEJA MAIS</a>
-      </div>
-      <div class="gallery-item">
-        <img src="{{ url_for('static', filename='imagens/COMPARTILHADOS DE CLIENTES.jpg') }}" alt="Projetos Compartilhados">
-        <h2>COMPARTILHADOS DE CLIENTES</h2>
-        <a href="#" class="button-link">VEJA MAIS</a>
-      </div>
-    </section>
+        <div class="gallery-item">
+            <img src="{{ url_for('static', filename='imagens/AMBIENTES.jpg') }}" alt="Ambientes">
+            <h2>AMBIENTES</h2>
+            <p>Descubra nossa galeria de projetos, com ambientes inspiradores que combinam funcionalidade e design inovador.</p>
+            <a href="#" class="button-link" data-route="{{ url_for('ambientes_partial') }}">VER AMBIENTES</a>
+        </div>
+        <div class="gallery-item">
+            <img src="{{ url_for('static', filename='imagens/MATERIAIS.jpg') }}" alt="Materiais">
+            <h2>MATERIAIS</h2>
+            <p>Conheça a qualidade e a variedade dos materiais que utilizamos para criar móveis duráveis e com acabamento impecável.</p>
+            <a href="#" class="button-link" data-route="{{ url_for('materiais_partial') }}">VER MATERIAIS</a>
+        </div>
+        </section>
 
     <section class="destaques-dinamicos">
-      <h1>ÚLTIMAS NOVIDADES</h1>
-      <hr>
-      <div class="gallery-section" id="novidades-dinamicas">
-        <p>Carregando novidades...</p>
-      </div>
+        <h1>ÚLTIMAS NOVIDADES</h1>
+        <hr>
+        <div id="novidades-area">
+            <p style="color: #ccc;">Carregando últimas novidades...</p>
+        </div>
     </section>
-
   </main>
 
   <footer>
-    <p>&copy; 2025 Sua Casa Se Tornando Arte. Todos os direitos reservados.</p>
+    <p>&copy; 2024 Sua Casa Se Tornando Arte. Todos os direitos reservados.</p>
   </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-        const novidadesDiv = document.getElementById('novidades-dinamicas');
-        const uploadFolder = "{{ url_for('static', filename='imagens_painel/') }}";
-
-        try {
-            const response = await fetch('/api/contents'); // Pega tds conteúdos
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const allContents = await response.json();
-            
-            
-            const novidades = allContents.slice(0, 4); 
-
-            if (novidades.length === 0) {
-                novidadesDiv.innerHTML = '<p>Nenhuma novidade encontrada. Adicione conteúdo no painel do lojista.</p>';
-                return;
-            }
-
-            novidadesDiv.innerHTML = '';
-
-            novidades.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'gallery-item'; 
-                itemDiv.innerHTML = `
-                    <img src="${uploadFolder}${item.image_filename}" alt="${item.title}">
-                    <h2>${item.title}</h2>
-                    <p>${item.description.substring(0, 100)}...</p> <a href="#" class="button-link" onclick="alert('Detalhes de: ${item.title}'); return false;">VER DETALHES</a>
-                `;
-                novidadesDiv.appendChild(itemDiv);
-            });
-
-        } catch (error) {
-            console.error('Erro ao carregar novidades:', error);
-            novidadesDiv.innerHTML = '<p>Erro ao carregar as novidades. Tente novamente mais tarde.</p>';
-        }
-    });
-  </script>
 </body>
 </html>
