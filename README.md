@@ -27,6 +27,11 @@ Sistema de gerenciamento de produtos para lojistas do ramo de móveis planejados
 
 - Navegador moderno como Google Chrome, Firefox, etc
 - Backend configurado e rodando
+   * **Observação:** O código do backend (Python/Flask) deve estar na pasta raiz do projeto (`seu_projeto/app.py`) para que o aplicativo possa encontrar os templates e arquivos estáticos corretamente. Se o backend estiver em um repositório ou pasta separada, ele precisará ser movido ou ter seus caminhos configurados adequadamente.
+  1.  (Se aplicável) Instale as dependências Python: `pip install -r requirements.txt`
+  2.  Ative o ambiente virtual: `source venv/bin/activate` (Linux/macOS) ou `.\venv\Scripts\activate` (Windows PowerShell)
+  3.  Execute o servidor Flask: `python app.py`
+
 
 ### 📃 Páginas
 
