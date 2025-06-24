@@ -4,51 +4,47 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-
-app.secret_key = 'chavesecretaAqui'
-
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
+app.secret_key = 'secreta_chavE_aqUi'
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 class Content(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=True)
+    # NOVOS CAMPOS
+    category = db.Column(db.String(100), nullable=True) 
+    line = db.Column(db.String(100), nullable=True)
     image_filename = db.Column(db.String(200), nullable=True)
 
     def __repr__(self):
-        return f"Content('{self.title}', '{self.image_filename}')"
+        return f"Content('{self.title}', '{self.category}', '{self.line}', '{self.image_filename}')"
 
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
             'description': self.description,
+            'category': self.category,
+            'line': self.line,         
             'image_filename': self.image_filename
         }
-
 
 with app.app_context():
     db.create_all()
 
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 
 @app.route('/api/content', methods=['GET'])
 def get_all_content():
@@ -59,22 +55,27 @@ def get_all_content():
 def create_content():
     title = request.form.get('title')
     description = request.form.get('description')
-    image_file = request.files.get('image')
+    category = request.form.get('category')
+    line = request.form.get('line')         
+    imagem_file = request.files.get('imagem')
     image_filename = None
 
     if not title:
         return jsonify({'message': 'Título é obrigatório'}), 400
 
-    if image_file and allowed_file(image_file.filename):
-        filename = secure_filename(image_file.filename)
-        image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+   
+    if imagem_file and allowed_file(imagem_file.filename):
+        filename = secure_filename(imagem_file.filename)
+        imagem_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         image_filename = filename
-    elif image_file:
+    elif imagem_file:
         return jsonify({'message': 'Tipo de arquivo de imagem não permitido'}), 400
 
     new_content = Content(
         title=title,
         description=description,
+        category=category, 
+        line=line,         
         image_filename=image_filename
     )
     db.session.add(new_content)
@@ -83,33 +84,37 @@ def create_content():
 
 @app.route('/api/content/<int:content_id>', methods=['GET'])
 def get_content(content_id):
-    """Recupera um único item de conteúdo por ID."""
     content_item = Content.query.get_or_404(content_id)
     return jsonify(content_item.to_dict())
 
 @app.route('/api/content/<int:content_id>', methods=['PUT'])
 def update_content(content_id):
-    """Atualiza um item de conteúdo existente."""
     content_item = Content.query.get_or_404(content_id)
 
     title = request.form.get('title')
     description = request.form.get('description')
-    image_file = request.files.get('image')
+    category = request.form.get('category')
+    line = request.form.get('line')
+    imagem_file = request.files.get('imagem')
     
     if title:
         content_item.title = title
     if description is not None:
         content_item.description = description
+    if category is not None: # Adicionado
+        content_item.category = category
+    if line is not None:     # Adicionado
+        content_item.line = line
 
-    if image_file and allowed_file(image_file.filename):
+    if imagem_file and allowed_file(imagem_file.filename):
         if content_item.image_filename:
             old_path = os.path.join(app.config['UPLOAD_FOLDER'], content_item.image_filename)
             if os.path.exists(old_path):
                 os.remove(old_path)
-        filename = secure_filename(image_file.filename)
-        image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        filename = secure_filename(imagem_file.filename)
+        imagem_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         content_item.image_filename = filename
-    elif image_file and not allowed_file(image_file.filename):
+    elif imagem_file and not allowed_file(imagem_file.filename):
         return jsonify({'message': 'Tipo de arquivo de imagem não permitido'}), 400
     elif request.form.get('remove_image') == 'true':
         if content_item.image_filename:
@@ -123,7 +128,6 @@ def update_content(content_id):
 
 @app.route('/api/content/<int:content_id>', methods=['DELETE'])
 def delete_content(content_id):
-    """Deleta um item de conteúdo."""
     content_item = Content.query.get_or_404(content_id)
     if content_item.image_filename:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], content_item.image_filename)
@@ -132,8 +136,6 @@ def delete_content(content_id):
     db.session.delete(content_item)
     db.session.commit()
     return jsonify({'message': 'Conteúdo deletado com sucesso'}), 204
-
-
 
 @app.route('/')
 def index():
@@ -176,9 +178,9 @@ def logout():
     flash('Você foi desconectado.', 'info')
     return redirect(url_for('lojista'))
 
+
 @app.route('/painel')
 def painel():
-    
     if not session.get('logged_in'):
         flash('Por favor, faça login para acessar esta página.', 'warning')
         return redirect(url_for('lojista'))
