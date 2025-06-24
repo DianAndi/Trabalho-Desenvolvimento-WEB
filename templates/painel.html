@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Lojista</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> <link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}"> </head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}">
+</head>
 <body>
     <header>
         <div class="top-bar">
@@ -29,7 +31,6 @@
         <h1>Painel de Gerenciamento de Conteúdo</h1>
         <p>Bem-vindo, {{ session.username if session.username else 'Lojista' }}!</p>
 
-        {# Mensagens flash do Flask #}
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <ul class="flashes">
@@ -50,8 +51,35 @@
                 <label for="description">Descrição:</label>
                 <textarea id="description" name="description" required></textarea><br>
 
-                <label for="image">Imagem:</label>
-                <input type="file" id="image" name="image" accept="image/*"><br>
+                <label for="category">Categoria:</label>
+                <select id="category" name="category" required>
+                    <option value="">Selecione uma Categoria</option>
+                    <option value="cozinha">Cozinha</option>
+                    <option value="dormitorio">Dormitório</option>
+                    <option value="sala">Sala</option>
+                    <option value="escritorio">Escritório</option>
+                    <option value="banheiro">Banheiro</option>
+                    <option value="lavanderia">Lavanderia</option>
+                    <option value="area_gourmet">Área Gourmet</option>
+                    <option value="mdf">MDF</option>
+                    <option value="mdp">MDP</option>
+                    <option value="vidro">Vidro</option>
+                    <option value="ferragens">Ferragens</option>
+                    <option value="geral">Geral (Novidades)</option>
+                </select><br>
+
+                <label for="line">Linha/Estilo:</label>
+                <select id="line" name="line" required>
+                    <option value="">Selecione uma Linha</option>
+                    <option value="provensal">Provensal</option>
+                    <option value="industrial">Industrial</option>
+                    <option value="clean">Clean</option>
+                    <option value="colors">Colors</option>
+                    <option value="n/a">N/A (Não Aplicável)</option>
+                </select><br>
+
+                <label for="imagem">Imagem:</label>
+                <input type="file" id="imagem" name="imagem" accept="image/*"><br>
 
                 <button type="submit">Adicionar Conteúdo</button>
             </form>
@@ -66,7 +94,7 @@
                         <th>ID</th>
                         <th>Título</th>
                         <th>Descrição</th>
-                        <th>Imagem</th>
+                        <th>Categoria</th> <th>Linha/Estilo</th> <th>Imagem</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -90,8 +118,35 @@
                 <label for="edit-description">Descrição:</label>
                 <textarea id="edit-description" name="description" required></textarea><br>
 
-                <label for="edit-image">Alterar Imagem:</label>
-                <input type="file" id="edit-image" name="image" accept="image/*"><br>
+                <label for="edit-category">Categoria:</label>
+                <select id="edit-category" name="category" required>
+                    <option value="">Selecione uma Categoria</option>
+                    <option value="cozinha">Cozinha</option>
+                    <option value="dormitorio">Dormitório</option>
+                    <option value="sala">Sala</option>
+                    <option value="escritorio">Escritório</option>
+                    <option value="banheiro">Banheiro</option>
+                    <option value="lavanderia">Lavanderia</option>
+                    <option value="area_gourmet">Área Gourmet</option>
+                    <option value="mdf">MDF</option>
+                    <option value="mdp">MDP</option>
+                    <option value="vidro">Vidro</option>
+                    <option value="ferragens">Ferragens</option>
+                    <option value="geral">Geral (Novidades)</option>
+                </select><br>
+
+                <label for="edit-line">Linha/Estilo:</label>
+                <select id="edit-line" name="line" required>
+                    <option value="">Selecione uma Linha</option>
+                    <option value="provensal">Provensal</option>
+                    <option value="industrial">Industrial</option>
+                    <option value="clean">Clean</option>
+                    <option value="colors">Colors</option>
+                    <option value="n/a">N/A (Não Aplicável)</option>
+                </select><br>
+
+                <label for="edit-imagem">Alterar Imagem:</label>
+                <input type="file" id="edit-imagem" name="imagem" accept="image/*"><br>
                 <p id="currentImageName">Imagem atual: </p>
                 <input type="checkbox" id="remove-image" name="remove_image" value="true">
                 <label for="remove-image">Remover imagem</label><br>
