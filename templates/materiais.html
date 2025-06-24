@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materiais - Sua Casa Se Tornando Arte</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/materiais.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="{{ url_for('static', filename='js/navegacao.js') }}" defer></script>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div><p>RUA XXXXXXXX, 0000</p><p>BAIRRO XYZ • CIDADE - ES</p><p>CEP 00000-00</p></div>
+      <div><p>00 00000-0000</p></div>
+      <div><p>TRANSFORMANDO PROJETOS EM REALIDADE</p></div>
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <button id="btnLojista" class="btn-lojista">LOJISTA</button>
+      </div>
+    </div>
+    <nav>
+      <button id="btnInicio" data-route="{{ url_for('index_partial') }}">INÍCIO</button>
+      <button id="btnAmbientes" data-route="{{ url_for('ambientes_partial') }}">AMBIENTES</button>
+      <button id="btnMateriais" data-route="{{ url_for('materiais_partial') }}">MATERIAIS</button>
+      <button id="btnContato" data-route="{{ url_for('contato_partial') }}">CONTATO</button>
+    </nav>
+  </header>
+
+  <main class="galeria-materiais">
+    <h1>MATERIAIS</h1>
+    <hr>
+    <div class="galeria" id="galeria-materiais-dinamica">
+      <p>Carregando materiais...</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Sua Casa Se Tornando Arte. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+          const galeriaDiv = document.getElementById('galeria-materiais-dinamica');
+          const uploadFolder = "{{ url_for('static', filename='imagens_painel/') }}";
+
+          try {
+              
+              const response = await fetch('/api/contents'); 
+              if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              const allContents = await response.json();
+              
+              /
+              const materiais = allContents.filter(content => 
+                content.line && ['provensal', 'industrial', 'clean', 'colors'].includes(content.line.toLowerCase()) ||
+                content.category && ['mdf', 'mdp', 'vidro', 'ferragens'].includes(content.category.toLowerCase()) // Caso usem categoria para material
+              );
+
+
+              if (materiais.length === 0) {
+                  galeriaDiv.innerHTML = '<p>Nenhum material encontrado. Adicione novos materiais no painel do lojista.</p>';
+                  return;
+              }
+
+              galeriaDiv.innerHTML = ''; 
+
+              materiais.forEach(material => {
+                  const materialDiv = document.createElement('div');
+                  materialDiv.className = 'ambiente'; 
+                  materialDiv.innerHTML = `
+                      <img src="${uploadFolder}${material.image_filename}" alt="${material.title}">
+                      <button class="btn-ambiente" data-material-id="desc-${material.id}">${material.title.toUpperCase()}</button>
+                      <div id="desc-${material.id}" class="descricao" style="display: none;">
+                          ${material.description}
+                      </div>
+                  `;
+                  galeriaDiv.appendChild(materialDiv);
+              });
+
+              
+              const materialButtons = document.querySelectorAll('.btn-ambiente');
+              function mostrarDescricao(id) {
+                  const descricoes = document.querySelectorAll('.descricao');
+                  descricoes.forEach(desc => desc.style.display = 'none');
+                  const targetDescription = document.getElementById(id);
+                  if (targetDescription) {
+                      targetDescription.style.display = 'block';
+                  }
+              }
+
+              materialButtons.forEach(button => {
+                  button.addEventListener('click', (event) => {
+                      const targetId = event.target.dataset.materialId;
+                      if (targetId) {
+                          mostrarDescricao(targetId);
+                      }
+                  });
+              });
+
+          } catch (error) {
+              console.error('Erro ao carregar materiais:', error);
+              galeriaDiv.innerHTML = '<p>Erro ao carregar os materiais. Tente novamente mais tarde.</p>';
+          }
+      });
+  </script>
+</body>
+</html>
