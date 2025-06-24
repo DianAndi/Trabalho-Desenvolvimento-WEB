@@ -66,18 +66,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Handle the Lojista button (full page reload)
+  
     if (btnLojista) {
-        btnLojista.addEventListener('click', () => {
-            // For the lojista page, we perform a full page reload as it's an authenticated area.
-            window.location.href = "/lojista"; // Updated to Flask route
-        });
-    }
+    btnLojista.addEventListener('click', () => {
+    
+        window.location.href = btnLojista.dataset.route;
+    });
+}
 
    
 
     window.addEventListener('popstate', (event) => {
-        // Check if there's a state object with a 'path' (from pushState)
+        
         if (event.state && event.state.path) {
             loadPageContent(event.state.path);
         } else {
