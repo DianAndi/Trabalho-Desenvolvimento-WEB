@@ -1,182 +1,161 @@
 /* painel.css */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
-
-body {
-    background-color: #1f1f1f;
-    color: white;
-    line-height: 1.6;
-    padding: 20px;
-}
-
 .container {
     max-width: 1200px;
     margin: 20px auto;
-    background-color: #2a2a2a;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 h1, h2 {
-    color: #ADAEB3;
+    color: #333;
     text-align: center;
-    margin-bottom: 25px;
-}
-
-h1 {
-    font-size: 36px;
-}
-
-h2 {
-    font-size: 28px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
-.logout-btn {
-    float: right;
-    background-color: #f44336;
-    color: white;
-    padding: 8px 15px;
+hr {
     border: none;
+    border-top: 2px solid #eee;
+    margin-bottom: 30px;
+}
+
+/* Área de Mensagens */
+.message-area {
+    padding: 10px;
+    margin-bottom: 20px;
     border-radius: 5px;
-    text-decoration: none;
+    text-align: center;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    display: none;
 }
 
-.logout-btn:hover {
-    background-color: #d32f2f;
+.message-area.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
 }
 
-.form-section, .content-list {
-    margin-bottom: 40px;
-    padding: 20px;
-    background-color: #333;
+.message-area.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+}
+
+
+.form-section {
+    background-color: #f9f9f9;
+    padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    border: 1px solid #eee;
 }
 
-form label {
+.form-section label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #ccc;
+    color: #555;
 }
 
-form input[type="text"],
-form textarea,
-form select {
+.form-section input[type="text"],
+.form-section textarea,
+.form-section input[type="file"] {
     width: calc(100% - 20px);
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #444;
-    color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     font-size: 16px;
 }
 
-form input[type="file"] {
-    margin-bottom: 15px;
-    color: #ccc;
-}
-
-form textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-form input:focus,
-form textarea:focus,
-form select:focus {
-    outline: none;
-    border-color: #ADAEB3;
-    box-shadow: 0 0 5px rgba(173, 174, 179, 0.5);
-}
-
-form button[type="submit"] {
-    background-color: #ADAEB3;
-    color: #1f1f1f;
-    padding: 12px 25px;
+.form-section button {
+    padding: 10px 20px;
     border: none;
-    border-radius: 20px;
-    font-size: 18px;
-    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
     transition: background-color 0.3s ease;
-    display: block;
-    width: fit-content;
-    margin: 20px auto 0;
 }
 
-form button[type="submit"]:hover {
-    background-color: white;
+.form-section button:hover {
+    background-color: #0056b3;
 }
 
+/* Estilo da Tabela */
+.content-list-section {
+    margin-top: 30px;
+}
 
-table {
+#contentsTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-th, td {
+#contentsTable th, #contentsTable td {
+    border: 1px solid #ddd;
     padding: 12px 15px;
-    border-bottom: 1px solid #555;
     text-align: left;
-    color: #ccc;
 }
 
-th {
-    background-color: #444;
+#contentsTable th {
+    background-color: #f2f2f2;
     font-weight: bold;
-    color: white;
+    color: #333;
 }
 
-td img {
-    max-width: 80px;
-    height: auto;
-    border-radius: 5px;
-    vertical-align: middle;
+#contentsTable tr:nth-child(even) {
+    background-color: #f8f8f8;
 }
 
-.edit-btn, .delete-btn {
+#contentsTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+#contentsTable .edit-btn, #contentsTable .delete-btn {
     padding: 8px 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    font-weight: bold;
+    font-size: 14px;
     margin-right: 5px;
     transition: background-color 0.3s ease;
 }
 
-.edit-btn {
-    background-color: #2196F3; /* Azul */
+#contentsTable .edit-btn {
+    background-color: #28a745;
     color: white;
 }
 
-.edit-btn:hover {
-    background-color: #1976D2;
+#contentsTable .edit-btn:hover {
+    background-color: #218838;
 }
 
-.delete-btn {
-    background-color: #f44336; /* Vermelho */
+#contentsTable .delete-btn {
+    background-color: #dc3545;
     color: white;
 }
 
-.delete-btn:hover {
-    background-color: #d32f2f;
+#contentsTable .delete-btn:hover {
+    background-color: #c82333;
 }
 
+/* Pré-visualização da imagem na tabela */
+#contentsTable img {
+    max-width: 70px;
+    height: auto;
+    border-radius: 4px;
+}
 
+/* Estilo do Modal */
 .modal {
     display: none;
     position: fixed;
@@ -186,20 +165,19 @@ td img {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.7);
-    padding-top: 60px;
+    background-color: rgba(0,0,0,0.4);
 }
 
 .modal-content {
-    background-color: #2a2a2a;
-    margin: 5% auto;
+    background-color: #fefefe;
+    margin: 15% auto;
     padding: 30px;
     border: 1px solid #888;
-    border-radius: 10px;
-    width: 80%;
+    width: 80%; /* Pode ser mais responsivo */
     max-width: 600px;
+    border-radius: 10px;
     position: relative;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .close-button {
@@ -211,121 +189,121 @@ td img {
 
 .close-button:hover,
 .close-button:focus {
-    color: white;
+    color: black;
     text-decoration: none;
     cursor: pointer;
 }
 
-#current-image-preview {
+.modal-content label {
     display: block;
-    margin-top: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
 }
 
-#current-image-name {
-    margin-top: 5px;
+.modal-content input[type="text"],
+.modal-content textarea,
+.modal-content input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}
+
+#currentImageName {
     font-size: 0.9em;
-    color: #aaa;
-}
-
-
-.flashes {
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 20px;
-}
-
-.flashes li {
-    padding: 10px;
-    border-radius: 5px;
+    color: #666;
+    margin-top: -10px;
     margin-bottom: 10px;
-    font-weight: bold;
-    text-align: center;
 }
 
-.flashes .success, .message.success {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.flashes .error, .message.error {
-    background-color: #f44336;
-    color: white;
-}
-
-.message {
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 15px;
-    text-align: center;
-    font-weight: bold;
-}
-
-
-
+/* Ajustes Responsivos */
 @media (max-width: 768px) {
     .container {
-        margin: 10px;
-        padding: 20px;
-    }
-
-    .form-section, .content-list {
         padding: 15px;
+        margin: 10px;
     }
 
-    form input[type="text"],
-    form textarea,
-    form select {
+    .form-section input[type="text"],
+    .form-section textarea,
+    .form-section input[type="file"],
+    .form-section button,
+    .modal-content input[type="text"],
+    .modal-content textarea,
+    .modal-content input[type="file"],
+    .modal-content button {
         width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
-    table, thead, tbody, th, td, tr {
+    #contentsTable th, #contentsTable td {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+}
+
+@media (max-width: 600px) {
+    #contentsTable, #contentsTable thead, #contentsTable tbody, #contentsTable th, #contentsTable td, #contentsTable tr {
         display: block;
     }
 
-    thead tr {
+    #contentsTable thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    tr {
-        border: 1px solid #555;
+    #contentsTable tr {
+        border: 1px solid #ccc;
         margin-bottom: 10px;
         border-radius: 8px;
     }
 
-    td {
+    #contentsTable td {
         border: none;
+        border-bottom: 1px solid #eee;
         position: relative;
         padding-left: 50%;
         text-align: right;
     }
 
-    td:before {
+    #contentsTable td::before {
+        content: attr(data-label);
         position: absolute;
-        top: 6px;
         left: 6px;
         width: 45%;
         padding-right: 10px;
         white-space: nowrap;
-        text-align: left;
         font-weight: bold;
-        color: #ADAEB3;
+        text-align: left;
     }
-
-    
-    td:nth-of-type(1):before { content: "ID:"; }
-    td:nth-of-type(2):before { content: "Título:"; }
-    td:nth-of-type(3):before { content: "Descrição:"; }
-    td:nth-of-type(4):before { content: "Categoria:"; }
-    td:nth-of-type(5):before { content: "Linha:"; }
-    td:nth-of-type(6):before { content: "Imagem:"; }
-    td:nth-of-type(7):before { content: "Ações:"; }
-
-    .modal-content {
-        width: 95%;
-        margin: 20px auto;
-    }
+    /* Rótulos de dados para tabela responsiva */
+    #contentsTable td:nth-of-type(1):before { content: "ID:"; }
+    #contentsTable td:nth-of-type(2):before { content: "Título:"; }
+    #contentsTable td:nth-of-type(3):before { content: "Descrição:"; }
+    #contentsTable td:nth-of-type(4):before { content: "Imagem:"; }
+    #contentsTable td:nth-of-type(5):before { content: "Ações:"; }
 }
