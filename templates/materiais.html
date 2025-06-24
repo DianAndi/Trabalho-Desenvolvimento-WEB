@@ -18,7 +18,7 @@
       <div class="socials">
         <a href="#"><i class="fab fa-facebook-f"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
-        <button id="btnLojista" class="btn-lojista">LOJISTA</button>
+        <button id="btnLojista" class="btn-lojista" data-route="{{ url_for('lojista') }}">LOJISTA</button>
       </div>
     </div>
     <nav>
@@ -29,11 +29,41 @@
     </nav>
   </header>
 
-  <main class="galeria-materiais">
-    <h1>MATERIAIS</h1>
+  <main class="galeria-materiais" id="main-content"> <h1>MATERIAIS</h1>
     <hr>
-    <div class="galeria" id="galeria-materiais-dinamica">
-      <p>Carregando materiais...</p>
+
+    <div class="galeria">
+      <div class="ambiente">
+        <img src="{{ url_for('static', filename='imagens/mdf.png') }}" alt="MDF">
+        <button class="btn-ambiente" data-material-id="desc-mdf">MDF</button>
+        <div id="desc-mdf" class="descricao" style="display: none;">
+          O MDF (Medium Density Fiberboard) é um painel de fibras de madeira de média densidade, muito usado para móveis planejados por sua versatilidade e acabamento liso.
+        </div>
+      </div>
+
+      <div class="ambiente">
+        <img src="{{ url_for('static', filename='imagens/mdp.png') }}" alt="MDP">
+        <button class="btn-ambiente" data-material-id="desc-mdp">MDP</button>
+        <div id="desc-mdp" class="descricao" style="display: none;">
+          O MDP (Medium Density Particleboard) é composto por partículas de madeira e oferece boa resistência estrutural, ideal para estruturas internas.
+        </div>
+      </div>
+
+      <div class="ambiente">
+        <img src="{{ url_for('static', filename='imagens/vidro.png') }}" alt="Vidro">
+        <button class="btn-ambiente" data-material-id="desc-vidro">VIDRO</button>
+        <div id="desc-vidro" class="descricao" style="display: none;">
+          O vidro é utilizado em portas, prateleiras e detalhes decorativos, trazendo leveza e modernidade aos ambientes.
+        </div>
+      </div>
+
+      <div class="ambiente">
+        <img src="{{ url_for('static', filename='imagens/ferragens.png') }}" alt="Ferragens">
+        <button class="btn-ambiente" data-material-id="desc-ferragens">FERRAGENS</button>
+        <div id="desc-ferragens" class="descricao" style="display: none;">
+          Ferragens de alta qualidade -dobradiças, corrediças e puxadores- são essenciais para o bom funcionamento e durabilidade dos móveis.
+        </div>
+      </div>
     </div>
   </main>
 
@@ -42,70 +72,33 @@
   </footer>
 
   <script>
-      document.addEventListener('DOMContentLoaded', async () => {
-          const galeriaDiv = document.getElementById('galeria-materiais-dinamica');
-          const uploadFolder = "{{ url_for('static', filename='imagens_painel/') }}";
+    document.addEventListener('DOMContentLoaded', () => {
+        const materialButtons = document.querySelectorAll('.btn-ambiente');
 
-          try {
-              
-              const response = await fetch('/api/contents'); 
-              if (!response.ok) {
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              const allContents = await response.json();
-              
-              /
-              const materiais = allContents.filter(content => 
-                content.line && ['provensal', 'industrial', 'clean', 'colors'].includes(content.line.toLowerCase()) ||
-                content.category && ['mdf', 'mdp', 'vidro', 'ferragens'].includes(content.category.toLowerCase()) // Caso usem categoria para material
-              );
+        function mostrarDescricao(id) {
+            const descricoes = document.querySelectorAll('.descricao');
+            descricoes.forEach(desc => desc.style.display = 'none');
 
+            const targetDescription = document.getElementById(id);
+            if (targetDescription) {
+                targetDescription.style.display = 'block';
+            }
+        }
 
-              if (materiais.length === 0) {
-                  galeriaDiv.innerHTML = '<p>Nenhum material encontrado. Adicione novos materiais no painel do lojista.</p>';
-                  return;
-              }
+     
+        materialButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const targetId = event.target.dataset.materialId;
+                if (targetId) {
+                    mostrarDescricao(targetId);
+                }
+            });
+        });
 
-              galeriaDiv.innerHTML = ''; 
-
-              materiais.forEach(material => {
-                  const materialDiv = document.createElement('div');
-                  materialDiv.className = 'ambiente'; 
-                  materialDiv.innerHTML = `
-                      <img src="${uploadFolder}${material.image_filename}" alt="${material.title}">
-                      <button class="btn-ambiente" data-material-id="desc-${material.id}">${material.title.toUpperCase()}</button>
-                      <div id="desc-${material.id}" class="descricao" style="display: none;">
-                          ${material.description}
-                      </div>
-                  `;
-                  galeriaDiv.appendChild(materialDiv);
-              });
-
-              
-              const materialButtons = document.querySelectorAll('.btn-ambiente');
-              function mostrarDescricao(id) {
-                  const descricoes = document.querySelectorAll('.descricao');
-                  descricoes.forEach(desc => desc.style.display = 'none');
-                  const targetDescription = document.getElementById(id);
-                  if (targetDescription) {
-                      targetDescription.style.display = 'block';
-                  }
-              }
-
-              materialButtons.forEach(button => {
-                  button.addEventListener('click', (event) => {
-                      const targetId = event.target.dataset.materialId;
-                      if (targetId) {
-                          mostrarDescricao(targetId);
-                      }
-                  });
-              });
-
-          } catch (error) {
-              console.error('Erro ao carregar materiais:', error);
-              galeriaDiv.innerHTML = '<p>Erro ao carregar os materiais. Tente novamente mais tarde.</p>';
-          }
-      });
+    
+        const initialDescriptions = document.querySelectorAll('.descricao');
+        initialDescriptions.forEach(desc => desc.style.display = 'none');
+    });
   </script>
 </body>
 </html>
