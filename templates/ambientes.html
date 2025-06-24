@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ambientes - Sua Casa Se Tornando Arte</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/ambientes.css.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="{{ url_for('static', filename='js/navegacao.js') }}" defer></script>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div><p>RUA XXXXXXXX, 0000</p><p>BAIRRO XYZ • CIDADE - ES</p><p>CEP 00000-00</p></div>
+      <div><p>00 00000-0000</p></div>
+      <div><p>TRANSFORMANDO PROJETOS EM REALIDADE</p></div>
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <button id="btnLojista" class="btn-lojista">LOJISTA</button>
+      </div>
+    </div>
+    <nav>
+      <button id="btnInicio" data-route="{{ url_for('index_partial') }}">INÍCIO</button>
+      <button id="btnAmbientes" data-route="{{ url_for('ambientes_partial') }}">AMBIENTES</button>
+      <button id="btnMateriais" data-route="{{ url_for('materiais_partial') }}">MATERIAIS</button>
+      <button id="btnContato" data-route="{{ url_for('contato_partial') }}">CONTATO</button>
+    </nav>
+  </header>
+
+  <main class="galeria-ambientes">
+    <h1>AMBIENTES</h1>
+    <hr>
+    <div class="galeria" id="galeria-ambientes-dinamica">
+      <p>Carregando ambientes...</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Sua Casa Se Tornando Arte. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const galeriaDiv = document.getElementById('galeria-ambientes-dinamica');
+        const uploadFolder = "{{ url_for('static', filename='imagens_painel/') }}";
+
+        try {
+            
+            const categories = ['cozinha', 'dormitorio', 'sala', 'escritorio', 'banheiro', 'lavanderia', 'area_gourmet'];
+            let allAmbientes = [];
+
+            for (const category of categories) {
+                const response = await fetch(`/api/contents/category/${category}`);
+                if (!response.ok) {
+                    console.warn(`Não foi possível carregar ambientes para a categoria: ${category}. Status: ${response.status}`);
+                    continue; // Pular p a próx categoria se tiver erro
+                }
+                const data = await response.json();
+                allAmbientes = allAmbientes.concat(data);
+            }
+
+            if (allAmbientes.length === 0) {
+                galeriaDiv.innerHTML = '<p>Nenhum ambiente encontrado. Adicione novos ambientes no painel do lojista.</p>';
+                return;
+            }
+
+            galeriaDiv.innerHTML = ''; // Limpa  "Carregando..."
+
+            // P exibir só uma img por categoria
+            const displayedCategories = new Set();
+
+            allAmbientes.forEach(ambiente => {
+                
+
+                const ambienteDiv = document.createElement('div');
+                ambienteDiv.className = 'ambiente';
+                ambienteDiv.innerHTML = `
+                    <img src="${uploadFolder}${ambiente.image_filename}" alt="${ambiente.title}">
+                    <button class="btn-ambiente">${ambiente.category.toUpperCase()}</button>
+                `;
+                galeriaDiv.appendChild(ambienteDiv);
+            });
+
+        } catch (error) {
+            console.error('Erro ao carregar ambientes:', error);
+            galeriaDiv.innerHTML = '<p>Erro ao carregar os ambientes. Tente novamente mais tarde.</p>';
+        }
+    });
+  </script>
+</body>
+</html>
