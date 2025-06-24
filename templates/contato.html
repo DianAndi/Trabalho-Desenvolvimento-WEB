@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato - Sua Casa Se Tornando Arte</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/contato.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="{{ url_for('static', filename='js/navegacao.js') }}" defer></script>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div><p>RUA XXXXXXXX, 0000</p><p>BAIRRO XYZ • CIDADE - ES</p><p>CEP 00000-00</p></div>
+      <div><p>00 00000-0000</p></div>
+      <div><p>TRANSFORMANDO PROJETOS EM REALIDADE</p></div>
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <button id="btnLojista" class="btn-lojista">LOJISTA</button>
+      </div>
+    </div>
+    <nav>
+      <button id="btnInicio" data-route="{{ url_for('index_partial') }}">INÍCIO</button>
+      <button id="btnAmbientes" data-route="{{ url_for('ambientes_partial') }}">AMBIENTES</button>
+      <button id="btnMateriais" data-route="{{ url_for('materiais_partial') }}">MATERIAIS</button>
+      <button id="btnContato" data-route="{{ url_for('contato_partial') }}">CONTATO</button>
+    </nav>
+  </header>
+
+<main class="contato-pagina">
+    <h1>SOLICITE SEU PROJETO</h1>
+    <hr>
+
+    <form>
+        <fieldset>
+            <legend>Informações do Cliente</legend>
+
+            <label for="nome">Nome:</label><br>
+            <input type="text" id="nome" name="nome" required><br><br>
+
+            <label for="cidade">Cidade:</label><br>
+            <input type="text" id="cidade" name="cidade" required><br><br>
+
+            <label for="tel">Telefone:</label><br>
+            <input type="text" id="tel" name="tel" required><br><br>
+
+            <label for="mail">E-mail:</label><br>
+            <input type="email" id="mail" name="mail" required><br><br>
+
+            <label for="amb">Ambientes:</label><br>
+            <input type="text" id="amb" name="amb" required><br><br>
+
+            <label for="ref">Referências:</label><br>
+            <input type="text" id="ref" name="ref" required><br><br>
+
+            <label for="inv">Valor previsto de investimento:</label><br>
+            <input type="text" id="inv" name="inv" required><br><br>
+
+            <button type="submit">Enviar</button>
+        </fieldset>
+    </form>
+</main>
+
+  <footer>
+    <p>&copy; 2025 Sua Casa Se Tornando Arte. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
