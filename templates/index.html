@@ -40,39 +40,26 @@
     </nav>
   </header>
 
-  <main id="main-content">
-    <section class="hero-section">
-        <h1>SUA CASA SE TORNANDO ARTE</h1>
-        <img src="{{ url_for('static', filename='imagens/SEU PROJETO.png') }}" alt="Sua Casa Se Tornando Arte">
-        <p>Transforme seus ambientes com nossos móveis planejados de alta qualidade. Criamos projetos únicos que refletem sua personalidade e otimizam cada espaço. Do design à instalação, nossa equipe garante excelência e satisfação.</p>
+  <main class="galeria" id="main-content"> 
+    <img src="{{ url_for('static', filename='imagens/cozinha.png') }}" alt="Cozinha" />
+    <img src="{{ url_for('static', filename='imagens/quarto.png') }}" alt="Quarto" />
+    <img src="{{ url_for('static', filename='imagens/sala.png') }}" alt="Sala de Estar" />
+    <section class="chamada-servicos">
+      <h2>Nossos Ambientes</h2>
+      <p>Explore projetos feitos sob medida para você.</p>
+      <button id="exploreAmbientesBtn" class="btn-geral" data-route="{{ url_for('ambientes_partial') }}">EXPLORAR AMBIENTES</button>
     </section>
 
-    <section class="gallery-section">
-        <div class="gallery-item">
-            <img src="{{ url_for('static', filename='imagens/AMBIENTES.jpg') }}" alt="Ambientes">
-            <h2>AMBIENTES</h2>
-            <p>Descubra nossa galeria de projetos, com ambientes inspiradores que combinam funcionalidade e design inovador.</p>
-            <a href="#" class="button-link" data-route="{{ url_for('ambientes_partial') }}">VER AMBIENTES</a>
-        </div>
-        <div class="gallery-item">
-            <img src="{{ url_for('static', filename='imagens/MATERIAIS.jpg') }}" alt="Materiais">
-            <h2>MATERIAIS</h2>
-            <p>Conheça a qualidade e a variedade dos materiais que utilizamos para criar móveis duráveis e com acabamento impecável.</p>
-            <a href="#" class="button-link" data-route="{{ url_for('materiais_partial') }}">VER MATERIAIS</a>
-        </div>
-        </section>
-
-    <section class="destaques-dinamicos">
-        <h1>ÚLTIMAS NOVIDADES</h1>
-        <hr>
-        <div id="novidades-area">
-            <p style="color: #ccc;">Carregando últimas novidades...</p>
-        </div>
+    <section class="chamada-materiais">
+      <h2>Materiais de Qualidade</h2>
+      <p>Conheça o MDF, MDP, Vidro e Ferragens que usamos para garantir durabilidade.</p>
+      <button id="exploreMateriaisBtn" class="btn-geral" data-route="{{ url_for('materiais_partial') }}">VER MATERIAIS</button>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2024 Sua Casa Se Tornando Arte. Todos os direitos reservados.</p>
+    <p>&copy; 2025 Sua Casa Se Tornando Arte. Todos os direitos reservados.</p>
   </footer>
+
 </body>
 </html>
