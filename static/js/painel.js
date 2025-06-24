@@ -1,4 +1,4 @@
-// painel.js
+// static/js/painel.js
 
 document.addEventListener('DOMContentLoaded', () => {
     const addContentForm = document.getElementById('addContentForm');
@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const editIdInput = document.getElementById('edit-id');
     const editTitleInput = document.getElementById('edit-title');
     const editDescriptionInput = document.getElementById('edit-description');
-    const editImageInput = document.getElementById('edit-image');
+    const editCategoryInput = document.getElementById('edit-category');
+    const editLineInput = document.getElementById('edit-line');         
+    const editImagemInput = document.getElementById('edit-imagem');   
     const currentImageName = document.getElementById('currentImageName');
     const removeImageCheckbox = document.getElementById('remove-image');
 
@@ -17,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const listMessageArea = document.getElementById('listMessageArea');
     const editMessageArea = document.getElementById('editMessageArea');
 
-    
     function showMessage(area, message, type = 'success') {
         area.textContent = message;
         area.className = `message-area ${type}`;
@@ -26,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
             area.className = 'message-area';
         }, 3000);
     }
-
 
     async function fetchContents() {
         try {
@@ -45,18 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderContents(contents) {
         contentsTableBody.innerHTML = '';
         if (contents.length === 0) {
-            contentsTableBody.innerHTML = '<tr><td colspan="5">Nenhum conteúdo cadastrado.</td></tr>';
+            contentsTableBody.innerHTML = '<tr><td colspan="7">Nenhum conteúdo cadastrado.</td></tr>';
             return;
         }
 
         contents.forEach(item => {
             const row = contentsTableBody.insertRow();
             row.dataset.id = item.id;
+
             row.insertCell(0).textContent = item.id;
             row.insertCell(1).textContent = item.title;
             row.insertCell(2).textContent = item.description;
+            row.insertCell(3).textContent = item.category || 'N/A'; // NOVO
+            row.insertCell(4).textContent = item.line || 'N/A';     // NOVO
 
-            const imageCell = row.insertCell(3);
+            const imageCell = row.insertCell(5);
             if (item.image_filename) {
                 const img = document.createElement('img');
                 img.src = `/static/uploads/${item.image_filename}`;
@@ -68,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 imageCell.textContent = 'N/A';
             }
 
-            const actionsCell = row.insertCell(4);
+            const actionsCell = row.insertCell(6);
             const editBtn = document.createElement('button');
             editBtn.textContent = 'Editar';
             editBtn.classList.add('edit-btn');
@@ -84,10 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     addContentForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(addContentForm);
+
         try {
             const response = await fetch('/api/content', {
                 method: 'POST',
@@ -107,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
     async function openEditModal(id) {
         try {
             const response = await fetch(`/api/content/${id}`);
@@ -119,8 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
             editIdInput.value = item.id;
             editTitleInput.value = item.title;
             editDescriptionInput.value = item.description;
-            // Limpa o input de arquivo por razões de segurança
-            editImageInput.value = '';
+            editCategoryInput.value = item.category || ''; 
+            editLineInput.value = item.line || '';        
+
+            editImagemInput.value = ''; // Limpa o input de arquivo
             removeImageCheckbox.checked = false;
 
             if (item.image_filename) {
@@ -149,11 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             if (response.ok) {
                 showMessage(editMessageArea, data.message || 'Conteúdo atualizado com sucesso!');
-                fetchContents(); // Atualiza a lista
+                fetchContents();
                 setTimeout(() => {
                     editModal.style.display = 'none';
                     editMessageArea.textContent = '';
-                }, 1500); // Fecha o modal após a mensagem
+                }, 1500);
             } else {
                 throw new Error(data.message || 'Erro ao atualizar conteúdo.');
             }
@@ -175,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
     async function deleteContent(id) {
         if (!confirm('Tem certeza que deseja deletar este conteúdo?')) {
             return;
@@ -186,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (response.ok) {
                 showMessage(listMessageArea, 'Conteúdo deletado com sucesso!', 'success');
-                fetchContents(); // Atualiza a lista
+                fetchContents();
             } else {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Falha ao deletar conteúdo.');
