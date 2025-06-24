@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Lojista</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Painel de Gerenciamento de Conteúdo</h1>
+        <p>Bem-vindo, {{ session.username if session.username else 'Lojista' }}! <a href="{{ url_for('logout') }}" class="logout-btn">Sair</a></p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <div class="form-section">
+            <h2>Adicionar Novo Conteúdo</h2>
+            <form id="addContentForm" enctype="multipart/form-data">
+                <label for="title">Título:</label>
+                <input type="text" id="title" name="title" required><br>
+
+                <label for="description">Descrição:</label>
+                <textarea id="description" name="description" required></textarea><br>
+
+                <label for="category">Categoria:</label>
+                <select id="category" name="category" required>
+                    <option value="">Selecione uma Categoria</option>
+                    <option value="cozinha">Cozinha</option>
+                    <option value="dormitorio">Dormitório</option>
+                    <option value="sala">Sala</option>
+                    <option value="escritorio">Escritório</option>
+                    <option value="banheiro">Banheiro</option>
+                    <option value="lavanderia">Lavanderia</option>
+                    <option value="area_gourmet">Área Gourmet</option>
+                    <option value="mdf">MDF</option>
+                    <option value="mdp">MDP</option>
+                    <option value="vidro">Vidro</option>
+                    <option value="ferragens">Ferragens</option>
+                    <option value="geral">Geral (Novidades)</option>
+                </select><br>
+
+                <label for="line">Linha/Estilo:</label>
+                <select id="line" name="line" required>
+                    <option value="">Selecione uma Linha</option>
+                    <option value="provensal">Provensal</option>
+                    <option value="industrial">Industrial</option>
+                    <option value="clean">Clean</option>
+                    <option value="colors">Colors</option>
+                    <option value="n/a">N/A (Não Aplicável)</option>
+                </select><br>
+
+                <label for="imagem">Imagem:</label>
+                <input type="file" id="imagem" name="imagem" accept="image/*" required><br>
+
+                <button type="submit">Adicionar Conteúdo</button>
+            </form>
+            <p id="add-message" class="message"></p>
+        </div>
+
+        <div class="content-list">
+            <h2>Conteúdos Cadastrados</h2>
+            <table id="contentTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>Categoria</th>
+                        <th>Linha</th>
+                        <th>Imagem</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for content in contents %}
+                    <tr>
+                        <td>{{ content.id }}</td>
+                        <td>{{ content.title }}</td>
+                        <td>{{ content.description[:50] }}...</td>
+                        <td>{{ content.category }}</td>
+                        <td>{{ content.line }}</td>
+                        <td><img src="{{ url_for('static', filename='imagens_painel/' + content.image_filename) }}" alt="{{ content.title }}" width="100"></td>
+                        <td>
+                            <button class="edit-btn" data-id="{{ content.id }}" data-title="{{ content.title }}" data-description="{{ content.description }}" data-category="{{ content.category }}" data-line="{{ content.line }}" data-image="{{ content.image_filename }}">Editar</button>
+                            <button class="delete-btn" data-id="{{ content.id }}">Excluir</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Editar Conteúdo</h2>
+                <form id="editContentForm" enctype="multipart/form-data">
+                    <input type="hidden" id="edit-id" name="id">
+                    <label for="edit-title">Título:</label>
+                    <input type="text" id="edit-title" name="title" required><br>
+
+                    <label for="edit-description">Descrição:</label>
+                    <textarea id="edit-description" name="description" required></textarea><br>
+
+                    <label for="edit-category">Categoria:</label>
+                    <select id="edit-category" name="category" required>
+                        <option value="cozinha">Cozinha</option>
+                        <option value="dormitorio">Dormitório</option>
+                        <option value="sala">Sala</option>
+                        <option value="escritorio">Escritório</option>
+                        <option value="banheiro">Banheiro</option>
+                        <option value="lavanderia">Lavanderia</option>
+                        <option value="area_gourmet">Área Gourmet</option>
+                        <option value="mdf">MDF</option>
+                        <option value="mdp">MDP</option>
+                        <option value="vidro">Vidro</option>
+                        <option value="ferragens">Ferragens</option>
+                        <option value="geral">Geral (Novidades)</option>
+                    </select><br>
+
+                    <label for="edit-line">Linha/Estilo:</label>
+                    <select id="edit-line" name="line" required>
+                        <option value="provensal">Provensal</option>
+                        <option value="industrial">Industrial</option>
+                        <option value="clean">Clean</option>
+                        <option value="colors">Colors</option>
+                        <option value="n/a">N/A (Não Aplicável)</option>
+                    </select><br>
+
+                    <label for="edit-imagem">Nova Imagem (opcional):</label>
+                    <input type="file" id="edit-imagem" name="imagem" accept="image/*"><br>
+                    <img id="current-image-preview" src="" alt="Current Image" width="100" style="margin-top: 10px; display: none;">
+                    <p id="current-image-name" style="font-size: 0.9em; color: #aaa;"></p>
+
+                    <button type="submit">Salvar Alterações</button>
+                </form>
+                <p id="edit-message" class="message"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const addContentForm = document.getElementById('addContentForm');
+            const addMessage = document.getElementById('add-message');
+            const contentTableBody = document.querySelector('#contentTable tbody');
+
+            const editModal = document.getElementById('editModal');
+            const closeButton = document.querySelector('.close-button');
+            const editContentForm = document.getElementById('editContentForm');
+            const editMessage = document.getElementById('edit-message');
+            const currentImagePreview = document.getElementById('current-image-preview');
+            const currentImageName = document.getElementById('current-image-name');
+
+            //recarregar
+            async function fetchContents() {
+                try {
+                    const response = await fetch('/api/contents');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const contents = await response.json();
+                    contentTableBody.innerHTML = ''; 
+
+                    contents.forEach(content => {
+                        const row = contentTableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${content.id}</td>
+                            <td>${content.title}</td>
+                            <td>${content.description.substring(0, 50)}...</td>
+                            <td>${content.category}</td>
+                            <td>${content.line}</td>
+                            <td><img src="{{ url_for('static', filename='imagens_painel/') }}${content.image_filename}" alt="${content.title}" width="100"></td>
+                            <td>
+                                <button class="edit-btn"
+                                    data-id="${content.id}"
+                                    data-title="${content.title}"
+                                    data-description="${content.description}"
+                                    data-category="${content.category}"
+                                    data-line="${content.line}"
+                                    data-image="${content.image_filename}">
+                                    Editar
+                                </button>
+                                <button class="delete-btn" data-id="${content.id}">Excluir</button>
+                            </td>
+                        `;
+                    });
+                    attachEventListeners(); 
+                } catch (error) {
+                    console.error('Erro ao buscar conteúdos:', error);
+                    addMessage.textContent = 'Erro ao carregar conteúdos.';
+                    addMessage.className = 'message error';
+                }
+            }
+
+            
+            function attachEventListeners() {
+                document.querySelectorAll('.edit-btn').forEach(button => {
+                    button.onclick = (e) => {
+                        const id = e.target.dataset.id;
+                        const title = e.target.dataset.title;
+                        const description = e.target.dataset.description;
+                        const category = e.target.dataset.category;
+                        const line = e.target.dataset.line;
+                        const image = e.target.dataset.image;
+
+                        document.getElementById('edit-id').value = id;
+                        document.getElementById('edit-title').value = title;
+                        document.getElementById('edit-description').value = description;
+                        document.getElementById('edit-category').value = category;
+                        document.getElementById('edit-line').value = line;
+                        
+                        if (image) {
+                            currentImagePreview.src = "{{ url_for('static', filename='imagens_painel/') }}" + image;
+                            currentImagePreview.style.display = 'block';
+                            currentImageName.textContent = `Imagem atual: ${image}`;
+                        } else {
+                            currentImagePreview.style.display = 'none';
+                            currentImageName.textContent = 'Nenhuma imagem atual.';
+                        }
+
+                        editModal.style.display = 'block';
+                    };
+                });
+
+                document.querySelectorAll('.delete-btn').forEach(button => {
+                    button.onclick = async (e) => {
+                        if (confirm('Tem certeza que deseja excluir este conteúdo?')) {
+                            const id = e.target.dataset.id;
+                            try {
+                                const response = await fetch(`/api/content/${id}`, {
+                                    method: 'DELETE'
+                                });
+                                const data = await response.json();
+                                if (response.ok) {
+                                    addMessage.textContent = data.message;
+                                    addMessage.className = 'message success';
+                                    fetchContents(); 
+                                } else {
+                                    throw new Error(data.message || 'Erro ao excluir conteúdo.');
+                                }
+                            } catch (error) {
+                                console.error('Erro ao excluir conteúdo:', error);
+                                addMessage.textContent = error.message;
+                                addMessage.className = 'message error';
+                            }
+                        }
+                    };
+                });
+            }
+
+            // fetch 
+            fetchContents();
+
+            
+            addContentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(addContentForm);
+
+                try {
+                    const response = await fetch('/api/content', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        addMessage.textContent = data.message;
+                        addMessage.className = 'message success';
+                        addContentForm.reset();
+                        fetchContents(); 
+                    } else {
+                        throw new Error(data.message || 'Erro ao adicionar conteúdo.');
+                    }
+                } catch (error) {
+                    console.error('Erro ao adicionar conteúdo:', error);
+                    addMessage.textContent = error.message;
+                    addMessage.className = 'message error';
+                }
+            });
+
+            
+            closeButton.onclick = () => {
+                editModal.style.display = 'none';
+                editMessage.textContent = ''; 
+                editContentForm.reset(); 
+                currentImagePreview.style.display = 'none';
+                currentImageName.textContent = '';
+            };
+
+            window.onclick = (event) => {
+                if (event.target == editModal) {
+                    editModal.style.display = 'none';
+                    editMessage.textContent = ''; 
+                    editContentForm.reset(); 
+                    currentImagePreview.style.display = 'none';
+                    currentImageName.textContent = '';
+                }
+            };
+
+            
+            editContentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const contentId = document.getElementById('edit-id').value;
+                const formData = new FormData(editContentForm);
+
+                try {
+                    const response = await fetch(`/api/content/${contentId}`, {
+                        method: 'PUT',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        editMessage.textContent = data.message;
+                        editMessage.className = 'message success';
+                        fetchContents(); // Refresh
+                        setTimeout(() => {
+                            editModal.style.display = 'none';
+                            editMessage.textContent = '';
+                        }, 2000); 
+                    } else {
+                        throw new Error(data.message || 'Erro ao atualizar conteúdo.');
+                    }
+                } catch (error) {
+                    console.error('Erro ao atualizar conteúdo:', error);
+                    editMessage.textContent = error.message;
+                    editMessage.className = 'message error';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
