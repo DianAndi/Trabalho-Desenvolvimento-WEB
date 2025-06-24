@@ -18,7 +18,7 @@
       <div class="socials">
         <a href="#"><i class="fab fa-facebook-f"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
-        <button id="btnLojista" class="btn-lojista">LOJISTA</button>
+        <button id="btnLojista" class="btn-lojista" data-route="{{ url_for('lojista') }}">LOJISTA</button>
       </div>
     </div>
     <nav>
@@ -29,65 +29,32 @@
     </nav>
   </header>
 
-  <main class="galeria-ambientes">
+  <main class="galeria-ambientes" id="main-content">
+    <img src="{{ url_for('static', filename='imagens/AMBIENTES.jpg') }}" alt="Ambientes Header" class="header-image">
     <h1>AMBIENTES</h1>
     <hr>
-    <div class="galeria" id="galeria-ambientes-dinamica">
-      <p>Carregando ambientes...</p>
+    <div class="galeria">
+        <div class="ambiente">
+            <img src="{{ url_for('static', filename='imagens/cozinha1.png') }}" alt="Cozinha">
+            <button class="btn-ambiente">COZINHA</button>
+        </div>
+        <div class="ambiente">
+            <img src="{{ url_for('static', filename='imagens/quarto1.png') }}" alt="Quarto">
+            <button class="btn-ambiente">DORMITÓRIO</button>
+        </div>
+        <div class="ambiente">
+            <img src="{{ url_for('static', filename='imagens/living1.png') }}" alt="Living">
+            <button class="btn-ambiente">SALA</button>
+        </div>
+        <div class="ambiente">
+            <img src="{{ url_for('static', filename='imagens/escritorio1.png') }}" alt="Escritório">
+            <button class="btn-ambiente">ESCRITÓRIO</button>
+        </div>
     </div>
   </main>
 
   <footer>
     <p>&copy; 2025 Sua Casa Se Tornando Arte. Todos os direitos reservados.</p>
   </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-        const galeriaDiv = document.getElementById('galeria-ambientes-dinamica');
-        const uploadFolder = "{{ url_for('static', filename='imagens_painel/') }}";
-
-        try {
-            
-            const categories = ['cozinha', 'dormitorio', 'sala', 'escritorio', 'banheiro', 'lavanderia', 'area_gourmet'];
-            let allAmbientes = [];
-
-            for (const category of categories) {
-                const response = await fetch(`/api/contents/category/${category}`);
-                if (!response.ok) {
-                    console.warn(`Não foi possível carregar ambientes para a categoria: ${category}. Status: ${response.status}`);
-                    continue; // Pular p a próx categoria se tiver erro
-                }
-                const data = await response.json();
-                allAmbientes = allAmbientes.concat(data);
-            }
-
-            if (allAmbientes.length === 0) {
-                galeriaDiv.innerHTML = '<p>Nenhum ambiente encontrado. Adicione novos ambientes no painel do lojista.</p>';
-                return;
-            }
-
-            galeriaDiv.innerHTML = ''; // Limpa  "Carregando..."
-
-            // P exibir só uma img por categoria
-            const displayedCategories = new Set();
-
-            allAmbientes.forEach(ambiente => {
-                
-
-                const ambienteDiv = document.createElement('div');
-                ambienteDiv.className = 'ambiente';
-                ambienteDiv.innerHTML = `
-                    <img src="${uploadFolder}${ambiente.image_filename}" alt="${ambiente.title}">
-                    <button class="btn-ambiente">${ambiente.category.toUpperCase()}</button>
-                `;
-                galeriaDiv.appendChild(ambienteDiv);
-            });
-
-        } catch (error) {
-            console.error('Erro ao carregar ambientes:', error);
-            galeriaDiv.innerHTML = '<p>Erro ao carregar os ambientes. Tente novamente mais tarde.</p>';
-        }
-    });
-  </script>
 </body>
 </html>
