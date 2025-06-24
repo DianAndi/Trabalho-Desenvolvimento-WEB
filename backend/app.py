@@ -93,4 +93,4 @@ def add_produto():
     descricao = request.form.get('descricao')
     categoria = request.form.get('categoria')
     linha = request.form.get('linha')
-    imagem_file = request.files.get('imagem
+    imagem_file = request.files.get('imagem')
